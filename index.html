@@ -34,7 +34,7 @@
 
   <section class="max-w-4xl mx-auto text-center py-16 px-4">
     <h2 class="text-3xl font-bold text-orange-300 mb-6">Why OnGo TV?</h2>
-    <div class="grid md:grid-cols-4 gap-8">
+    <div class="grid md:grid-cols-3 gap-8">
       <div>
         <h3 class="text-xl font-semibold mb-2">Live Channels</h3>
         <p class="text-gray-400">Stream your favorite channels in real-time without buffering.</p>
@@ -70,7 +70,7 @@
     </p>
     <p class="text-gray-400 text-sm">
       By downloading the app, you agree to our 
-      <a href="https://raw.githubusercontent.com/raeltechs/OnGoTV/blob/main/Legal/Eula.md" target="_blank" class="text-orange-400 underline">
+      <a href="https://raw.githubusercontent.com/raeltechs/OnGoTV/main/Legal/Eula.md" target="_blank" class="text-orange-400 underline">
         End User License Agreement & Disclaimer
       </a>.
     </p>
@@ -91,10 +91,37 @@
     let currentIndex = 0;
     const imgElement = document.getElementById('carousel-img');
 
-    setInterval(() => {
+  imgElement.style.opacity = 1;
+
+  let interval = setInterval(nextSlide, 3000);
+
+  function nextSlide() {
+    imgElement.style.transition = 'opacity 0.5s ease-in-out';
+    imgElement.style.opacity = 0;
+    setTimeout(() => {
       currentIndex = (currentIndex + 1) % carouselImages.length;
       imgElement.src = carouselImages[currentIndex];
-    }, 3000);
+      imgElement.style.opacity = 1;
+    }, 500);
+  }
+
+  let startX = 0;
+  imgElement.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    clearInterval(interval); 
+  });
+
+  imgElement.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+    if (endX - startX > 50) { 
+      currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
+    } else if (startX - endX > 50) { 
+      currentIndex = (currentIndex + 1) % carouselImages.length;
+    }
+    imgElement.src = carouselImages[currentIndex];
+    imgElement.style.opacity = 1;
+    interval = setInterval(nextSlide, 3000); 
+  });
   </script>
 
  </body>
