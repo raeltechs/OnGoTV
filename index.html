@@ -5,10 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OnGo TV - Stream Everywhere</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .carousel img { transition: opacity 0.5s ease-in-out; }
+    .download-btn { transition: transform 0.3s, background-color 0.3s; }
+    .download-btn:hover { transform: scale(1.05); background-color: #FF7A00; }
+  </style>
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans">
 
-  <!-- HERO SECTION -->
   <header class="text-center py-16 bg-gradient-to-b from-gray-800 via-gray-900 to-black">
     <img src="assets/logo.png" alt="OnGo TV Logo" class="mx-auto w-28 mb-6 rounded-lg shadow-lg">
     <h1 class="text-5xl font-bold text-orange-400 mb-4">OnGo TV</h1>
@@ -19,9 +23,12 @@
        class="inline-block mt-8 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
       📥 Download APK
     </a>
+
+    <div class="absolute top-0 left-0 w-full h-full bg-cover bg-center opacity-30"
+         style="background-image: url('assets/hero-bg.jpg');"></div>
+    <div class="absolute top-0 left-0 w-full h-full bg-black opacity-60"></div>
   </header>
 
-  <!-- FEATURES SECTION -->
   <section class="max-w-4xl mx-auto text-center py-16 px-4">
     <h2 class="text-3xl font-bold text-orange-300 mb-6">Why OnGo TV?</h2>
     <div class="grid md:grid-cols-3 gap-8">
@@ -45,7 +52,13 @@
     </div>
   </section>
 
-  <!-- LEGAL SECTION -->
+  <section class="max-w-5xl mx-auto py-16 px-4 text-center">
+    <h2 class="text-3xl font-bold text-orange-300 mb-6">App Screenshots</h2>
+    <div class="carousel relative overflow-hidden rounded-xl shadow-lg">
+      <img src="assets/screenshot1.png" class="w-full" id="carousel-img">
+    </div>
+  </section>
+
   <section class="bg-gray-800 py-12 px-4 text-center">
     <h2 class="text-2xl font-bold text-orange-300 mb-4">Legal & Disclaimer</h2>
     <p class="text-gray-400 mb-4 max-w-2xl mx-auto">
@@ -59,4 +72,24 @@
     </p>
   </section>
 
-  <!--
+  <footer class="text-center text-gray-500 text-sm py-6 border-t border-gray-700">
+    © 2025 OnGo TV — Developed by RaelTechs
+  </footer>
+
+  <script>
+    const carouselImages = [
+      'assets/screenshot1.png',
+      'assets/screenshot2.png',
+      'assets/screenshot3.png'
+    ];
+    let currentIndex = 0;
+    const imgElement = document.getElementById('carousel-img');
+
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % carouselImages.length;
+      imgElement.src = carouselImages[currentIndex];
+    }, 3000);
+  </script>
+
+ </body>
+</html>
