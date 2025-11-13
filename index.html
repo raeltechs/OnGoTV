@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OnGo TV - Stream Everywhere</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/logo.png" />
   <style>
     .carousel img { transition: opacity 0.5s ease-in-out; }
     .download-btn { transition: transform 0.3s, background-color 0.3s; }
@@ -16,9 +17,15 @@
   <header class="text-center py-16 bg-gradient-to-b from-gray-800 via-gray-900 to-black">
     <div class="relative z-10">
       <img src="assets/logo.png" alt="OnGo TV Logo" class="mx-auto w-28 mb-6 rounded-lg shadow-lg">
-      <h1 class="text-5xl font-bold text-orange-400 mb-4">OnGo TV</h1>
+      <h1 class="text-5xl font-bold text-orange-400 mb-4">
+        OnGo TV <span class="text-orange-300 italic text-2xl align-middle">Early Access</span>
+      </h1>
       <p class="text-gray-300 text-lg max-w-xl mx-auto">
         Watch live TV channels, and stay connected anytime, anywhere.
+      </p>
+
+      <p class="text-gray-200 text-sm mb-4">
+        OnGo TV v0.9.0
       </p>
       <a href="https://github.com/raeltechs/OnGoTV/releases/download/v.0.9.0/OnGoTV.Client.App.apk" download
          class="download-btn inline-block mt-8 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
