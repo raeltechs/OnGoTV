@@ -15,33 +15,27 @@
 
 <body class="bg-gray-900 text-gray-100 font-sans">
 
-  <!-- HEADER -->
   <header class="text-center py-16 bg-gradient-to-b from-gray-800 via-gray-900 to-black">
     <div class="relative z-10">
       <img src="assets/logo.png" alt="OnGo TV Logo" class="mx-auto w-28 mb-6 rounded-lg shadow-lg">
 
       <h1 class="text-5xl font-bold text-orange-400 mb-4">
-        OnGo TV <span class="text-orange-300 italic text-2xl align-middle">Early Access 🌐</span>
+        OnGo TV <span class="text-orange-300 italic text-2xl align-middle">Early Access</span>
       </h1>
 
       <p class="text-gray-300 text-lg max-w-xl mx-auto">
         Watch live TV channels, and stay connected anytime, anywhere.
       </p>
 
-      <!-- Version Text -->
-      <p id="version-text" class="text-gray-200 text-sm mb-2">Loading version...</p>
-
-      <!-- Download Button -->
       <a id="download-btn"
-         href="#"
-         download
-         class="download-btn inline-block mt-2 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
+        href="https://github.com/raeltechs/OnGoTV/releases/download/v.0.9.0/OnGoTV.Client.App.apk"
+        download
+        class="download-btn inline-block mt-8 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
         📥 Download APK
       </a>
 
-      <!-- Download Counter -->
       <p class="text-gray-200 text-sm mb-4">
-        <span id="download-counter">Loading...</span> downloads
+        <span id="download-counter">Loading...</span> v0.9.0-Early Access
       </p>
     </div>
   </header>
@@ -95,7 +89,6 @@
     </p>
   </section>
 
-  <!-- FOOTER -->
   <footer class="text-center text-gray-500 text-sm py-6 border-t border-gray-700">
     © 2025 OnGo TV — Developed by RaelTechs
   </footer>
@@ -119,6 +112,7 @@
     function nextSlide() {
       imgElement.style.transition = 'opacity 0.5s ease-in-out';
       imgElement.style.opacity = 0;
+
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % carouselImages.length;
         imgElement.src = carouselImages[currentIndex];
@@ -127,47 +121,50 @@
     }
 
     let startX = 0;
-    imgElement.addEventListener('touchstart', e => {
+    imgElement.addEventListener('touchstart', (e) => {
       startX = e.touches[0].clientX;
       clearInterval(interval);
     });
 
-    imgElement.addEventListener('touchend', e => {
+    imgElement.addEventListener('touchend', (e) => {
       const endX = e.changedTouches[0].clientX;
-      if (endX - startX > 50) currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
-      else if (startX - endX > 50) currentIndex = (currentIndex + 1) % carouselImages.length;
+
+      if (endX - startX > 50) { 
+        currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
+      } else if (startX - endX > 50) { 
+        currentIndex = (currentIndex + 1) % carouselImages.length;
+      }
+
       imgElement.src = carouselImages[currentIndex];
       imgElement.style.opacity = 1;
       interval = setInterval(nextSlide, 3000);
     });
   </script>
 
-  <!-- FETCH LATEST VERSION & UPDATE DOWNLOAD LINK -->
+  <!-- DOWNLOAD COUNTER + WORKER -->
   <script>
+    const downloadCounterEl = document.getElementById("download-counter");
     const downloadLink = document.getElementById("download-btn");
-    const versionText = document.getElementById("version-text");
-
-    fetch("https://api.github.com/repos/raeltechs/OnGoTV/releases/latest")
-      .then(res => res.json())
-      .then(data => {
-        const latestVersion = data.tag_name;
-        const apkAsset = data.assets.find(a => a.name.endsWith(".apk"));
-        if (apkAsset) {
-          downloadLink.href = apkAsset.browser_download_url;
-          versionText.innerText = `OnGo TV ${latestVersion} - Early Access`;
-        } else {
-          versionText.innerText = `OnGo TV ${latestVersion} - APK not found`;
-        }
-      })
-      .catch(err => {
-        console.error("GitHub fetch error:", err);
-        versionText.innerText = "Failed to fetch latest version";
-      });
-
-    // DOWNLOAD COUNTER VIA WORKER
     const workerUrl = "https://ongotv.raeltechs.workers.dev/";
+
+    // Fetch counter and update every 10s
+    async function updateDownloadCounter() {
+      try {
+        const res = await fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json");
+        const data = await res.json();
+        downloadCounterEl.innerText = data.count;
+      } catch (err) {
+        console.error("Failed to fetch download counter:", err);
+      }
+    }
+
+    updateDownloadCounter();
+    setInterval(updateDownloadCounter, 10000);
+
+    // Increment counter on click
     downloadLink.addEventListener("click", async function(e) {
       e.preventDefault();
+
       try {
         await fetch(workerUrl, {
           method: "POST",
@@ -177,15 +174,9 @@
       } catch (err) {
         console.error("Counter failed:", err);
       }
+
       setTimeout(() => { window.location.href = downloadLink.href; }, 150);
     });
-
-    // FETCH CURRENT DOWNLOAD COUNT
-    fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json")
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("download-counter").innerText = data.count;
-      });
   </script>
 
 </body>
