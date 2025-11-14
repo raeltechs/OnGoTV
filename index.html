@@ -127,5 +127,21 @@
   });
   </script>
 
+  <script>
+function incrementCounter() {
+  fetch("https://api.github.com/repos/raeltechs/OnGoTV/dispatches", {
+    method: "POST",
+    headers: {
+      "Accept": "application/vnd.github+json",
+      "Authorization": "Bearer GITHUB_TOKEN_PLACEHOLDER"
+    },
+    body: JSON.stringify({
+      event_type: "increment_download"
+    })
+  });
+}
+</script>
+
+
  </body>
 </html>
