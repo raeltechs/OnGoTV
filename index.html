@@ -40,7 +40,6 @@
     </div>
   </header>
 
-  <!-- WHY ONGO TV -->
   <section class="max-w-4xl mx-auto text-center py-16 px-4">
     <h2 class="text-3xl font-bold text-orange-300 mb-6">Why OnGo TV?</h2>
 
@@ -67,7 +66,6 @@
     </div>
   </section>
 
-  <!-- SCREENSHOTS -->
   <section class="max-w-5xl mx-auto py-16 px-4 text-center">
     <h2 class="text-3xl font-bold text-orange-300 mb-6">App Screenshots</h2>
     <div class="carousel relative overflow-hidden rounded-xl shadow-lg">
@@ -75,7 +73,6 @@
     </div>
   </section>
 
-  <!-- LEGAL -->
   <section class="bg-gray-800 py-12 px-4 text-center">
     <h2 class="text-2xl font-bold text-orange-300 mb-4">Legal & Disclaimer</h2>
     <p class="text-gray-400 mb-4 max-w-2xl mx-auto">
@@ -93,7 +90,6 @@
     © 2025 OnGo TV — Developed by RaelTechs
   </footer>
 
-  <!-- CAROUSEL SCRIPT -->
   <script>
     const carouselImages = [
       'assets/screenshot1.png',
@@ -141,13 +137,11 @@
     });
   </script>
 
-  <!-- DOWNLOAD COUNTER + WORKER -->
   <script>
     const downloadCounterEl = document.getElementById("download-counter");
     const downloadLink = document.getElementById("download-btn");
     const workerUrl = "https://ongotv.raeltechs.workers.dev/";
 
-    // Fetch counter and update every 10s
     async function updateDownloadCounter() {
       try {
         const res = await fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json");
@@ -161,7 +155,6 @@
     updateDownloadCounter();
     setInterval(updateDownloadCounter, 10000);
 
-    // Increment counter on click
     downloadLink.addEventListener("click", async function(e) {
       e.preventDefault();
 
