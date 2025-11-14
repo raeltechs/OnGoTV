@@ -28,14 +28,15 @@
       </p>
 
       <a id="download-btn"
-        href="https://github.com/raeltechs/OnGoTV/releases/download/v.0.9.0/OnGoTV.Client.App.apk"
+        href="#"
         download
         class="download-btn inline-block mt-8 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
         📥 Download APK
       </a>
 
       <p class="text-gray-200 text-sm mb-4">
-        <span id="download-counter">Loading...</span> v0.9.0-Early Access
+        <span id="app-version">Loading version...</span> - Early Access
+        <span id="download-counter">Counting Downloads...</span>
       </p>
     </div>
   </header>
@@ -139,20 +140,29 @@
 
   <script>
     const downloadCounterEl = document.getElementById("download-counter");
+    const appVersionEl = document.getElementById("app-version");
     const downloadLink = document.getElementById("download-btn");
     const workerUrl = "https://ongotv.raeltechs.workers.dev/";
 
-    async function updateDownloadCounter() {
+    async function updateDownloadInfo() {
       try {
         const res = await fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json");
         const data = await res.json();
         downloadCounterEl.innerText = data.count;
+
+        const releaseRes = await fetch("https://api.github.com/repos/raeltechs/OnGoTV/releases/latest");
+        const releaseData = await releaseRes.json();
+        const latestVersion = releaseData.tag_name;
+        appVersionEl.innerText = latestVersion;
+
+        const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
+        if (apkAsset) downloadLink.href = apkAsset.browser_download_url;
       } catch (err) {
         console.error("Failed to fetch download counter:", err);
       }
     }
 
-    updateDownloadCounter();
+    updateDownloadInfo();
     setInterval(updateDownloadCounter, 10000);
 
     downloadLink.addEventListener("click", async function(e) {
