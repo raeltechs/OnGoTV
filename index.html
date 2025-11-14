@@ -172,22 +172,17 @@
         const releaseRes = await fetch("https://api.github.com/repos/raeltechs/OnGoTV/releases/latest");
         const releaseData = await releaseRes.json();
         const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
-        if (apkAsset) downloadLink.href = apkAsset.browser_download_url;
-      } catch (err) {
-        console.error("Failed to fetch latest release:", err);
-      }
-      
-      try {
-        await fetch(workerUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ source: "web" })
-        });
-      } catch (err) {
-        console.error("Counter failed:", err);
-      }
+        if (apkAsset) {
+          const apkUrl = apkAsset.browser_download_url;
 
-      window.location.href = downloadLink.href;
+          await fetch(workerUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ source: "web" }) });
+
+          window.location.href = apkUrl;
+          }
+      } catch (err) {
+        console.error("Download failed:", err);
+        alert("Unable to fetch latest APK. Please try again later.");
+      }
     });
   </script>
 
