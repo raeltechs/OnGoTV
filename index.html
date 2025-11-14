@@ -1,6 +1,3 @@
-
-counter_token: "{{ site.countertoken }}"
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,24 +12,28 @@ counter_token: "{{ site.countertoken }}"
     .download-btn:hover { transform: scale(1.05); background-color: #FF7A00; }
   </style>
 </head>
+
 <body class="bg-gray-900 text-gray-100 font-sans">
 
   <header class="text-center py-16 bg-gradient-to-b from-gray-800 via-gray-900 to-black">
     <div class="relative z-10">
       <img src="assets/logo.png" alt="OnGo TV Logo" class="mx-auto w-28 mb-6 rounded-lg shadow-lg">
+
       <h1 class="text-5xl font-bold text-orange-400 mb-4">
         OnGo TV <span class="text-orange-300 italic text-2xl align-middle">Early Access</span>
       </h1>
+
       <p class="text-gray-300 text-lg max-w-xl mx-auto">
         Watch live TV channels, and stay connected anytime, anywhere.
       </p>
 
-    
-      <a onclick="incrementCounter()" 
-         href="https://github.com/raeltechs/OnGoTV/releases/download/v.0.9.0/OnGoTV.Client.App.apk" download
-         class="download-btn inline-block mt-8 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
+      <a 
+        href="https://github.com/raeltechs/OnGoTV/releases/download/v.0.9.0/OnGoTV.Client.App.apk"
+        download
+        class="download-btn inline-block mt-8 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
         📥 Download APK
       </a>
+
       <p class="text-gray-200 text-sm mb-4">
         <span id="download-counter">Loading...</span> v0.9.0-Early Access
       </p>
@@ -41,25 +42,27 @@ counter_token: "{{ site.countertoken }}"
 
   <section class="max-w-4xl mx-auto text-center py-16 px-4">
     <h2 class="text-3xl font-bold text-orange-300 mb-6">Why OnGo TV?</h2>
+
     <div class="grid md:grid-cols-3 gap-8">
       <div>
         <h3 class="text-xl font-semibold mb-2">Live Channels</h3>
         <p class="text-gray-400">Stream your favorite channels in real-time without buffering.</p>
       </div>
+
       <div>
         <h3 class="text-xl font-semibold mb-2">User-Friendly</h3>
         <p class="text-gray-400">Easy to use interface designed for all devices.</p>
       </div>
+
       <div>
         <h3 class="text-xl font-semibold mb-2">Free Access</h3>
         <p class="text-gray-400">Our app is free. Watch without subscriptions. Optionally donate for extra features.</p>
       </div>
     </div>
-    
-    <div>
-        <h3 class="text-xl font-semibold mb-2">Record Live Programs in MP4 Formats</h3>
-        <p class="text-gray-400">Donate and Verify your donation to activate program recording feature.</p>
-      </div>
+
+    <div class="mt-10">
+      <h3 class="text-xl font-semibold mb-2">Record Live Programs in MP4</h3>
+      <p class="text-gray-400">Donate and verify your donation to activate the recording feature.</p>
     </div>
   </section>
 
@@ -87,6 +90,7 @@ counter_token: "{{ site.countertoken }}"
     © 2025 OnGo TV — Developed by RaelTechs
   </footer>
 
+  <!-- CAROUSEL SCRIPT -->
   <script>
     const carouselImages = [
       'assets/screenshot1.png',
@@ -95,65 +99,77 @@ counter_token: "{{ site.countertoken }}"
       'assets/screenshot4.png',
       'assets/screenshot5.png'
     ];
+
     let currentIndex = 0;
     const imgElement = document.getElementById('carousel-img');
+    imgElement.style.opacity = 1;
 
-  imgElement.style.opacity = 1;
+    let interval = setInterval(nextSlide, 3000);
 
-  let interval = setInterval(nextSlide, 3000);
+    function nextSlide() {
+      imgElement.style.transition = 'opacity 0.5s ease-in-out';
+      imgElement.style.opacity = 0;
 
-  function nextSlide() {
-    imgElement.style.transition = 'opacity 0.5s ease-in-out';
-    imgElement.style.opacity = 0;
-    setTimeout(() => {
-      currentIndex = (currentIndex + 1) % carouselImages.length;
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % carouselImages.length;
+        imgElement.src = carouselImages[currentIndex];
+        imgElement.style.opacity = 1;
+      }, 500);
+    }
+
+    let startX = 0;
+
+    imgElement.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      clearInterval(interval);
+    });
+
+    imgElement.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+
+      if (endX - startX > 50) { 
+        currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
+      } else if (startX - endX > 50) { 
+        currentIndex = (currentIndex + 1) % carouselImages.length;
+      }
+
       imgElement.src = carouselImages[currentIndex];
       imgElement.style.opacity = 1;
-    }, 500);
-  }
 
-  let startX = 0;
-  imgElement.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    clearInterval(interval); 
-  });
-
-  imgElement.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    if (endX - startX > 50) { 
-      currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
-    } else if (startX - endX > 50) { 
-      currentIndex = (currentIndex + 1) % carouselImages.length;
-    }
-    imgElement.src = carouselImages[currentIndex];
-    imgElement.style.opacity = 1;
-    interval = setInterval(nextSlide, 3000); 
-  });
+      interval = setInterval(nextSlide, 3000);
+    });
   </script>
 
   <script>
-function incrementCounter() {
-  fetch("https://api.github.com/repos/raeltechs/OnGoTV/dispatches", {
-    method: "POST",
-    headers: {
-      "Accept": "application/vnd.github+json",
-      "Authorization": "Bearer ${{ secrets.COUNTER_TOKEN }}
-"
-    },
-    body: JSON.stringify({
-      event_type: "increment_download"
-    })
-  });
-}
-</script>
+    const workerUrl = "https://ongotv.raeltechs.workers.dev/";
+    const downloadLink = document.querySelector("a[download]");
 
-<script>
-fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json")
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById("download-counter").innerText = data.count;
-  });
-</script>
+    downloadLink.addEventListener("click", async function (e) {
+      e.preventDefault();
 
- </body>
+      try {
+        await fetch(workerUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ source: "web" })
+        });
+      } catch (err) {
+        console.error("Counter failed:", err);
+      }
+
+      setTimeout(() => {
+        window.location.href = downloadLink.href;
+      }, 150);
+    });
+  </script>
+
+  <script>
+    fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("download-counter").innerText = data.count;
+      });
+  </script>
+
+</body>
 </html>
