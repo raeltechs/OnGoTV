@@ -1,3 +1,6 @@
+
+counter_token: "{{ site.countertoken }}"
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,12 +28,13 @@
       </p>
 
     
-      <a href="https://github.com/raeltechs/OnGoTV/releases/download/v.0.9.0/OnGoTV.Client.App.apk" download
+      <a onclick="incrementCounter()" 
+         href="https://github.com/raeltechs/OnGoTV/releases/download/v.0.9.0/OnGoTV.Client.App.apk" download
          class="download-btn inline-block mt-8 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
         📥 Download APK
       </a>
       <p class="text-gray-200 text-sm mb-4">
-        v0.9.0-Early Access
+        <span id="download-counter">Loading...</span> v0.9.0-Early Access
       </p>
     </div>
   </header>
@@ -133,7 +137,8 @@ function incrementCounter() {
     method: "POST",
     headers: {
       "Accept": "application/vnd.github+json",
-      "Authorization": "Bearer GITHUB_TOKEN_PLACEHOLDER"
+      "Authorization": "Bearer ${{ secrets.COUNTER_TOKEN }}
+"
     },
     body: JSON.stringify({
       event_type: "increment_download"
@@ -142,6 +147,13 @@ function incrementCounter() {
 }
 </script>
 
+<script>
+fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("download-counter").innerText = data.count;
+  });
+</script>
 
  </body>
 </html>
