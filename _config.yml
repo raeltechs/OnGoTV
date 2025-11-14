@@ -1,0 +1,1 @@
+countertoken: "{{ secrets.COUNTER_TOKEN }}"
