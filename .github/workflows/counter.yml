@@ -1,0 +1,39 @@
+name: Update Counter
+
+on:
+  repository_dispatch:
+    types: [increment_download]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Read issue
+        id: get_issue
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.COUNTER_TOKEN }}
+          script: |
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 1, 
+            });
+            return issue.data.body;
+
+      - name: Update counter
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.COUNTER_TOKEN }}
+          script: |
+            let body = JSON.parse(`${{ steps.get_issue.outputs.result }}`);
+            body.count++;
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 1,
+              body: JSON.stringify(body, null, 2),
+            });
+            console.log("Updated count:", body.count);
