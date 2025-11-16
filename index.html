@@ -150,7 +150,7 @@
         const data = await res.json();
         downloadCounterEl.innerText = data.count;
 
-        const releaseRes = await fetch("https://api.github.com/repos/raeltechs/OnGoTV/releases/latest");
+        const releaseRes = await fetch("https://ongotv.raeltechs.workers.dev/");
         const releaseData = await releaseRes.json();
         const latestVersion = releaseData.tag_name;
         appVersionEl.innerText = latestVersion;
