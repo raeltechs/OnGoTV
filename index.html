@@ -142,23 +142,28 @@
     const downloadCounterEl = document.getElementById("download-counter");
     const appVersionEl = document.getElementById("app-version");
     const downloadLink = document.getElementById("download-btn");
-    const workerUrl = "https://ongotv.raeltechs.workers.dev/";
+
+    const apiUrl = "https://dsjgqplonykmanolycnn.supabase.co/functions/v1/github_website";
 
     async function updateDownloadInfo() {
       try {
-        const res = await fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json");
-        const data = await res.json();
-        downloadCounterEl.innerText = data.count;
+        const counterRes  = await fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json");
+        const counterData  = await counterRes.json();
+        downloadCounterEl.innerText = counterData.count;
 
-        const releaseRes = await fetch("https://ongotv.raeltechs.workers.dev/");
+        const releaseRes = await fetch(apiUrl, { method: "GET" });
         const releaseData = await releaseRes.json();
+
         const latestVersion = releaseData.tag_name;
         appVersionEl.innerText = latestVersion;
 
         const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
-        if (apkAsset) downloadLink.href = apkAsset.browser_download_url;
+        if (apkAsset) {
+          downloadLink.href = apkAsset.browser_download_url;
+        }
       } catch (err) {
-        console.error("Failed to fetch download counter:", err);
+        console.error("Failed to fetch release info:", err);
+        appVersionEl.innerText = "Error";
       }
     }
 
@@ -169,16 +174,18 @@
       e.preventDefault();
 
       try {
-        const releaseRes = await fetch("https://api.github.com/repos/raeltechs/OnGoTV/releases/latest");
+        await fetch(apiUrl, { method: "POST" });
+        
+        const releaseRes = await fetch(apiUrl, { method: "GET" });
         const releaseData = await releaseRes.json();
         const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
+        
         if (apkAsset) {
-          const apkUrl = apkAsset.browser_download_url;
+          window.location.href = apkAsset.browser_download_url;
+          } else {
+        alert("APK not found in latest release.");
+      }
 
-          await fetch(workerUrl, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ source: "web" }) });
-
-          window.location.href = apkUrl;
-          }
       } catch (err) {
         console.error("Download failed:", err);
         alert("Unable to fetch latest APK. Please try again later.");
