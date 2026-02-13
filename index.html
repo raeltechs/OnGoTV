@@ -1,197 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OnGo TV - Stream Everywhere</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="icon" type="image/png" href="assets/logo.png" />
-  <style>
-    .carousel img { transition: opacity 0.5s ease-in-out; }
-    .download-btn { transition: transform 0.3s, background-color 0.3s; }
-    .download-btn:hover { transform: scale(1.05); background-color: #FF7A00; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OnGo TV - Stream Everywhere</title>
+
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/logo.png" />
+
+<style>
+.carousel img { transition: opacity 0.5s ease-in-out; }
+.download-btn { transition: transform 0.3s, background-color 0.3s; }
+.download-btn:hover { transform: scale(1.05); background-color: #FF7A00; }
+</style>
 </head>
 
 <body class="bg-gray-900 text-gray-100 font-sans">
 
-  <header class="text-center py-16 bg-gradient-to-b from-gray-800 via-gray-900 to-black">
-    <div class="relative z-10">
-      <img src="assets/logo.png" alt="OnGo TV Logo" class="mx-auto w-28 mb-6 rounded-lg shadow-lg">
+<header class="text-center py-16 bg-gradient-to-b from-gray-800 via-gray-900 to-black">
+<div class="relative z-10">
 
-      <h1 class="text-5xl font-bold text-orange-400 mb-4">
-        OnGo TV <span class="text-orange-300 italic text-2xl align-middle">Early Access</span>
-      </h1>
+<img src="assets/logo.png" class="mx-auto w-28 mb-6 rounded-lg shadow-lg">
 
-      <p class="text-gray-300 text-lg max-w-xl mx-auto">
-        Watch live TV channels, and stay connected anytime, anywhere.
-      </p>
+<h1 class="text-5xl font-bold text-orange-400 mb-4">
+OnGo TV <span class="text-orange-300 italic text-2xl align-middle">Early Access</span>
+</h1>
 
-      <a id="download-btn"
-        href="#"
-        download
-        class="download-btn inline-block mt-8 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
-        📥 Download APK
-      </a>
+<p class="text-gray-300 text-lg max-w-xl mx-auto">
+Watch live TV channels, and stay connected anytime, anywhere.
+</p>
 
-      <p class="text-gray-200 text-sm mb-4">
-        <span id="app-version">Loading version...</span> - Early Access
-        <span id="download-counter">Counting Downloads...</span>
-      </p>
-    </div>
-  </header>
+<a id="download-btn"
+href="#"
+class="download-btn inline-block mt-8 px-8 py-4 bg-orange-500 text-white font-semibold rounded-xl shadow-lg hover:bg-orange-600 transition">
+📥 Download APK
+</a>
 
-  <section class="max-w-4xl mx-auto text-center py-16 px-4">
-    <h2 class="text-3xl font-bold text-orange-300 mb-6">Why OnGo TV?</h2>
+<p class="text-gray-200 text-sm mb-4">
+<span id="app-version">Loading version...</span> - Early Access
+<span id="download-counter">Counting Downloads...</span>
+</p>
 
-    <div class="grid md:grid-cols-3 gap-8">
-      <div>
-        <h3 class="text-xl font-semibold mb-2">Live Channels</h3>
-        <p class="text-gray-400">Stream your favorite channels in real-time without buffering.</p>
-      </div>
+</div>
+</header>
 
-      <div>
-        <h3 class="text-xl font-semibold mb-2">User-Friendly</h3>
-        <p class="text-gray-400">Easy to use interface designed for all devices.</p>
-      </div>
+<section class="max-w-4xl mx-auto text-center py-16 px-4">
+<h2 class="text-3xl font-bold text-orange-300 mb-6">Why OnGo TV?</h2>
 
-      <div>
-        <h3 class="text-xl font-semibold mb-2">Free Access</h3>
-        <p class="text-gray-400">Our app is free. Watch without subscriptions. Optionally donate for extra features.</p>
-      </div>
-    </div>
+<div class="grid md:grid-cols-3 gap-8">
+<div>
+<h3 class="text-xl font-semibold mb-2">Live Channels</h3>
+<p class="text-gray-400">Stream your favorite channels in real-time without buffering.</p>
+</div>
 
-    <div class="mt-10">
-      <h3 class="text-xl font-semibold mb-2">Record Live Programs in MP4</h3>
-      <p class="text-gray-400">Donate and verify your donation to activate the recording feature.</p>
-    </div>
-  </section>
+<div>
+<h3 class="text-xl font-semibold mb-2">User-Friendly</h3>
+<p class="text-gray-400">Easy to use interface designed for all devices.</p>
+</div>
 
-  <section class="max-w-5xl mx-auto py-16 px-4 text-center">
-    <h2 class="text-3xl font-bold text-orange-300 mb-6">App Screenshots</h2>
-    <div class="carousel relative overflow-hidden rounded-xl shadow-lg">
-      <img src="assets/screenshot1.png" class="w-full" id="carousel-img">
-    </div>
-  </section>
+<div>
+<h3 class="text-xl font-semibold mb-2">Free Access</h3>
+<p class="text-gray-400">Our app is free. Watch without subscriptions.</p>
+</div>
+</div>
+</section>
 
-  <section class="bg-gray-800 py-12 px-4 text-center">
-    <h2 class="text-2xl font-bold text-orange-300 mb-4">Legal & Disclaimer</h2>
-    <p class="text-gray-400 mb-4 max-w-2xl mx-auto">
-      OnGo TV aggregates publicly available streams. We do not host or claim ownership of any third-party content. All trademarks and copyrights belong to their respective owners.
-    </p>
-    <p class="text-gray-400 text-sm">
-      By downloading the app, you agree to our 
-      <a href="https://raw.githubusercontent.com/raeltechs/OnGoTV/main/Legal/Eula.md" target="_blank" class="text-orange-400 underline">
-        End User License Agreement & Disclaimer
-      </a>.
-    </p>
-  </section>
+<section class="max-w-5xl mx-auto py-16 px-4 text-center">
+<h2 class="text-3xl font-bold text-orange-300 mb-6">App Screenshots</h2>
+<div class="carousel relative overflow-hidden rounded-xl shadow-lg">
+<img src="assets/screenshot1.png" class="w-full" id="carousel-img">
+</div>
+</section>
 
-  <footer class="text-center text-gray-500 text-sm py-6 border-t border-gray-700">
-    © 2025 OnGo TV — Developed by RaelTechs
-  </footer>
+<footer class="text-center text-gray-500 text-sm py-6 border-t border-gray-700">
+© 2025 OnGo TV — Developed by RaelTechs
+</footer>
 
-  <script>
-    const carouselImages = [
-      'assets/screenshot1.png',
-      'assets/screenshot2.png',
-      'assets/screenshot3.png',
-      'assets/screenshot4.png',
-      'assets/screenshot5.png'
-    ];
+<!-- Carousel -->
+<script>
+const carouselImages = [
+'assets/screenshot1.png',
+'assets/screenshot2.png',
+'assets/screenshot3.png',
+'assets/screenshot4.png',
+'assets/screenshot5.png'
+];
 
-    let currentIndex = 0;
-    const imgElement = document.getElementById('carousel-img');
-    imgElement.style.opacity = 1;
+let currentIndex = 0;
+const imgElement = document.getElementById('carousel-img');
+let interval = setInterval(nextSlide, 3000);
 
-    let interval = setInterval(nextSlide, 3000);
+function nextSlide() {
+imgElement.style.opacity = 0;
 
-    function nextSlide() {
-      imgElement.style.transition = 'opacity 0.5s ease-in-out';
-      imgElement.style.opacity = 0;
+setTimeout(() => {
+currentIndex = (currentIndex + 1) % carouselImages.length;
+imgElement.src = carouselImages[currentIndex];
+imgElement.style.opacity = 1;
+}, 500);
+}
 
-      setTimeout(() => {
-        currentIndex = (currentIndex + 1) % carouselImages.length;
-        imgElement.src = carouselImages[currentIndex];
-        imgElement.style.opacity = 1;
-      }, 500);
-    }
+imgElement.addEventListener('touchstart', () => clearInterval(interval));
+imgElement.addEventListener('touchend', () => interval = setInterval(nextSlide, 3000));
+</script>
 
-    let startX = 0;
-    imgElement.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-      clearInterval(interval);
-    });
+<!-- Download Logic -->
+<script>
+const downloadCounterEl = document.getElementById("download-counter");
+const appVersionEl = document.getElementById("app-version");
+const downloadLink = document.getElementById("download-btn");
 
-    imgElement.addEventListener('touchend', (e) => {
-      const endX = e.changedTouches[0].clientX;
+const apiUrl = "https://dsjgqplonykmanolycnn.supabase.co/functions/v1/github_website";
 
-      if (endX - startX > 50) { 
-        currentIndex = (currentIndex - 1 + carouselImages.length) % carouselImages.length;
-      } else if (startX - endX > 50) { 
-        currentIndex = (currentIndex + 1) % carouselImages.length;
-      }
+function animateCounter(target) {
+let current = 0;
+const step = Math.ceil(target / 30);
 
-      imgElement.src = carouselImages[currentIndex];
-      imgElement.style.opacity = 1;
-      interval = setInterval(nextSlide, 3000);
-    });
-  </script>
+const timer = setInterval(() => {
+current += step;
+if (current >= target) {
+current = target;
+clearInterval(timer);
+}
 
-  <script>
-    const downloadCounterEl = document.getElementById("download-counter");
-    const appVersionEl = document.getElementById("app-version");
-    const downloadLink = document.getElementById("download-btn");
+downloadCounterEl.innerText = ` • ${current} Downloads`;
+}, 30);
+}
 
-    const apiUrl = "https://dsjgqplonykmanolycnn.supabase.co/functions/v1/github_website";
+async function updateDownloadInfo() {
+try {
 
-    async function updateDownloadInfo() {
-      try {
-        const counterRes  = await fetch("https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json");
-        const counterData  = await counterRes.json();
-        downloadCounterEl.innerText = counterData.count;
+const counterRes = await fetch(
+"https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json?nocache=" + Date.now()
+);
 
-        const releaseRes = await fetch(apiUrl, { method: "GET" });
-        const releaseData = await releaseRes.json();
+const counterData = await counterRes.json();
+animateCounter(counterData.count);
 
-        const latestVersion = releaseData.tag_name;
-        appVersionEl.innerText = latestVersion;
+const releaseRes = await fetch(apiUrl);
+const releaseData = await releaseRes.json();
 
-        const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
-        if (apkAsset) {
-          downloadLink.href = apkAsset.browser_download_url;
-        }
-      } catch (err) {
-        console.error("Failed to fetch release info:", err);
-        appVersionEl.innerText = "Error";
-      }
-    }
+appVersionEl.innerText = releaseData.tag_name;
 
-    updateDownloadInfo();
-    setInterval(updateDownloadInfo, 10000);
+const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
 
-    downloadLink.addEventListener("click", async function(e) {
-      e.preventDefault();
+if (apkAsset) {
+downloadLink.href = apkAsset.browser_download_url;
+}
 
-      try {
-        await fetch(apiUrl, { method: "POST" });
-        
-        const releaseRes = await fetch(apiUrl, { method: "GET" });
-        const releaseData = await releaseRes.json();
-        const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
-        
-        if (apkAsset) {
-          window.location.href = apkAsset.browser_download_url;
-          } else {
-        alert("APK not found in latest release.");
-      }
+return releaseData;
 
-      } catch (err) {
-        console.error("Download failed:", err);
-        alert("Unable to fetch latest APK. Please try again later.");
-      }
-    });
-  </script>
+} catch (err) {
+console.error(err);
+appVersionEl.innerText = "Error";
+}
+}
+
+updateDownloadInfo();
+setInterval(updateDownloadInfo, 60000); // 1 minute refresh
+
+downloadLink.addEventListener("click", async function(e) {
+e.preventDefault();
+
+downloadLink.style.pointerEvents = "none";
+downloadLink.innerText = "Preparing Download...";
+
+try {
+
+await fetch(apiUrl, { method: "POST" });
+
+const releaseData = await updateDownloadInfo();
+
+const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
+
+if (apkAsset) {
+window.location.href = apkAsset.browser_download_url;
+}
+
+} catch (err) {
+alert("Download failed. Please try again later.");
+} finally {
+downloadLink.style.pointerEvents = "auto";
+downloadLink.innerText = "📥 Download APK";
+}
+});
+</script>
 
 </body>
 </html>
