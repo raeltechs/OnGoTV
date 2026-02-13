@@ -88,6 +88,7 @@ const carouselImages = [
 
 let currentIndex = 0;
 const imgElement = document.getElementById('carousel-img');
+
 let interval = setInterval(nextSlide, 3000);
 
 function nextSlide() {
@@ -118,6 +119,7 @@ const step = Math.ceil(target / 30);
 
 const timer = setInterval(() => {
 current += step;
+
 if (current >= target) {
 current = target;
 clearInterval(timer);
@@ -130,25 +132,20 @@ downloadCounterEl.innerText = ` • ${current} Downloads`;
 async function updateDownloadInfo() {
 try {
 
-const counterRes = await fetch(
-"https://raw.githubusercontent.com/raeltechs/OnGoTV/main/download-counter.json?nocache=" + Date.now()
-);
+const res = await fetch(apiUrl);
+const data = await res.json();
 
-const counterData = await counterRes.json();
-animateCounter(counterData.count);
+animateCounter(data.downloads);
 
-const releaseRes = await fetch(apiUrl);
-const releaseData = await releaseRes.json();
+appVersionEl.innerText = data.tag_name;
 
-appVersionEl.innerText = releaseData.tag_name;
-
-const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
+const apkAsset = data.assets.find(a => a.name.endsWith(".apk"));
 
 if (apkAsset) {
 downloadLink.href = apkAsset.browser_download_url;
 }
 
-return releaseData;
+return data;
 
 } catch (err) {
 console.error(err);
@@ -157,9 +154,10 @@ appVersionEl.innerText = "Error";
 }
 
 updateDownloadInfo();
-setInterval(updateDownloadInfo, 60000); // 1 minute refresh
+setInterval(updateDownloadInfo, 60000);
 
 downloadLink.addEventListener("click", async function(e) {
+
 e.preventDefault();
 
 downloadLink.style.pointerEvents = "none";
@@ -169,9 +167,9 @@ try {
 
 await fetch(apiUrl, { method: "POST" });
 
-const releaseData = await updateDownloadInfo();
+const data = await updateDownloadInfo();
 
-const apkAsset = releaseData.assets.find(a => a.name.endsWith(".apk"));
+const apkAsset = data.assets.find(a => a.name.endsWith(".apk"));
 
 if (apkAsset) {
 window.location.href = apkAsset.browser_download_url;
@@ -183,6 +181,7 @@ alert("Download failed. Please try again later.");
 downloadLink.style.pointerEvents = "auto";
 downloadLink.innerText = "📥 Download APK";
 }
+
 });
 </script>
 
